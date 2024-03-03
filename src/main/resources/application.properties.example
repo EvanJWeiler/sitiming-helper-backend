@@ -1,0 +1,4 @@
+datasource.sitiming.jdbc-url=jdbc:sqlserver://__server__:__port__;databaseName=__db_name__;user=__username__;password=__password__;multiSubnetFailover=false;encrypt=false;trustServerCertificate=true
+datasource.sitiming.dialect=org.hibernate.dialect.SQLServer2012Dialect
+
+server.port=8085
