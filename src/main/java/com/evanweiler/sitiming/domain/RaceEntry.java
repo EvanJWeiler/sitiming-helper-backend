@@ -2,8 +2,8 @@ package com.evanweiler.sitiming.domain;
 
 import org.springframework.data.annotation.Id;
 
-public record Category(
+public record RaceEntry(
         @Id
         String id,
-        String name
+        Boolean checkedIn
 ) {}

@@ -12,15 +12,18 @@ import java.util.List;
 public interface PunchRepository extends CrudRepository<Punch, String> {
 
     @Query("""
-                SELECT
-                    dp.ID AS 'id', dp.CardNumber AS 'card_number',
-                    dp.ControlCode AS 'control_code', dp.CalculatedTimeOfDay AS 'time_of_day'
-                FROM Download d
-                JOIN DownloadPunch dp ON d.ID = dp.DownloadID
-                WHERE d.EventID = :raceId
-                AND dp.ControlCode >= 10
-                AND dp.StationMode = 2
-                ORDER BY dp.CardNumber, dp.VisitedOrder;
+        SELECT
+            dp.ID AS 'id', dp.CardNumber as 'card_number', dp.ControlCode AS 'control_code', dp.CalculatedTimeOfDay AS 'time_of_day'
+        FROM DownloadPunch dp
+        JOIN Download d ON dp.DownloadID = d.ID
+        JOIN Class c ON d.EventId = c.EventID
+        WHERE d.EventID = :raceId
+        AND c.ID = :categoryId
+        AND dp.StationMode = 2
+        ORDER BY dp.VisitedOrder;
     """)
-    List<Punch> getPunchesByRaceId(@Param("raceId") String raceId);
+    List<Punch> getPunchesForCategory(
+            @Param("raceId") String raceId,
+            @Param("categoryId") String categoryId
+    );
 }
