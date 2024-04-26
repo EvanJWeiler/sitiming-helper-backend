@@ -2,11 +2,13 @@ package com.evanweiler.sitiming.domain;
 
 import org.springframework.data.annotation.Id;
 
-public record Racer(
+import java.util.Map;
+
+public record RacerResult(
         @Id
         String id,
         Integer bibNumber,
         String racerName,
-        Integer cardNumber,
-        String teamName
+        String teamName,
+        Map<String, Long> resultsMap
 ) {}

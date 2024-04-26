@@ -9,12 +9,12 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJdbcRepositories (basePackages = {"com.evanweiler.sitiming.repository"})
+@EnableJdbcRepositories(basePackages = {"com.evanweiler.sitiming.repository"})
 public class DatasourceConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "datasource.sitiming")
-    public DataSource dataSource() {
+    @ConfigurationProperties(prefix="sitiming.datasource")
+    public DataSource createDataSource() {
         return DataSourceBuilder.create().build();
     }
 }

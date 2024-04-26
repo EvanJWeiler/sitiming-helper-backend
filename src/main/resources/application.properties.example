@@ -1,4 +1,7 @@
-datasource.sitiming.jdbc-url=jdbc:sqlserver://__server__:__port__;databaseName=__db_name__;user=__username__;password=__password__;multiSubnetFailover=false;encrypt=false;trustServerCertificate=true
-datasource.sitiming.dialect=org.hibernate.dialect.SQLServer2012Dialect
+sitiming.datasource.dialect=org.hibernate.dialect.SQLServer2012Dialect
+sitiming.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+sitiming.datasource.jdbc-url=jdbc:sqlserver://{url}:{port};databaseName={database};multiSubnetFailover=false;encrypt=false;trustServerCertificate=true
+sitiming.datasource.username=example_username
+sitiming.datasource.password=example_password
 
 server.port=8085
