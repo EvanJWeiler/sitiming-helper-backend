@@ -16,7 +16,6 @@ public interface RaceRepository extends CrudRepository<Race, String> {
         SELECT
             e.ID as 'id', e.Name as 'name'
         FROM Event e
-        WHERE ActivityOptions = 5
         order by e.Date desc
     """)
     List<Race> getAllRaces();

@@ -41,7 +41,6 @@ public class ResultsService {
     private Map<String, Long> buildResultsMapForRacer(Integer cardNumber,
                                                       Set<String> validStages, List<Punch> catPunches) {
         Map<String, Long> returnMap = new LinkedHashMap<>();
-        long totalTime = 0L;
 
         List<Punch> punchList = catPunches
                 .stream()
@@ -53,14 +52,20 @@ public class ResultsService {
             long timeBetween = punchList.get(i + 1).timeOfDay().getTime() - punchList.get(i).timeOfDay().getTime();
             String key = punchList.get(i).controlCode().toString() + "/" + punchList.get(i + 1).controlCode().toString();
 
-            if (validStages.contains(key)) {
-                totalTime += timeBetween;
-                returnMap.put(key, timeBetween);
-            }
+            if (!validStages.contains(key)) continue;
+
+            returnMap.putIfAbsent(key, timeBetween);
+            returnMap.computeIfPresent(key, (k, v) -> {
+                if (timeBetween < v) return timeBetween;
+
+                return v;
+            });
         }
 
         if (returnMap.values().size() == validStages.size()) {
-            returnMap.put(TOTAL_TIME, totalTime);
+            returnMap.put(TOTAL_TIME,
+                    returnMap.values().stream().mapToLong(Long::longValue).sum()
+            );
         } else {
             returnMap.put(TOTAL_TIME, 999999999L);
         }

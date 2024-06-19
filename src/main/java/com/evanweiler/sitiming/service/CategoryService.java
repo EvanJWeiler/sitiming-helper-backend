@@ -36,7 +36,7 @@ public class CategoryService {
         for (int i = 0; i < catStations.size() - 1; i += 2) {
             stages.add(new Stage(
                     catStations.get(i).controlCode().toString() + "/" + catStations.get(i + 1).controlCode().toString(),
-                    catStations.get(i + 1).stageLabel().substring(0, catStations.get(i + 1).stageLabel().indexOf(";"))
+                    catStations.get(i + 1).stageLabel()
             ));
         }
 

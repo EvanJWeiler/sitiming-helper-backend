@@ -27,8 +27,8 @@ public interface StationRepository extends CrudRepository<Station, String> {
     @Query("""
         SELECT
             cm.ID AS 'id', cm.PublishedCode AS 'control_code',
-            cc.Number AS 'num_order', cc.Activities AS 'stage_label',
-            CAST(cc.ExcludeFromTime AS BIT) AS 'excluded_from_time'
+            cc.Number AS 'num_order', CAST(cc.ExcludeFromTime AS BIT) AS 'excluded_from_time',
+            IIF(cc.Activities IS NULL, cc.StageName, SUBSTRING(cc.Activities, 1, LEN(cc.Activities) - 2)) AS 'stage_label'
         FROM ControlMaster cm
         JOIN CourseControl cc ON cm.ID = cc.ControlMasterID
         JOIN Class c ON cc.CourseID = c.CourseID
