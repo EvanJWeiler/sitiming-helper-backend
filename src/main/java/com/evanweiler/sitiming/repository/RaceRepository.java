@@ -25,9 +25,10 @@ public interface RaceRepository extends CrudRepository<Race, String> {
             e.ID as 'id', e.Name AS 'name', COUNT(ee.ID) AS 'total_racers',
             sum(IIF(ee.AllReturnedOrLostBroken = 0, 1, 0)) AS 'racers_on_course'
         FROM Event e
-        JOIN EntryEvent ee ON e.ID = ee.EventID
-        WHERE ee.EventID = :raceId
-        AND ee.ClassID IS NOT NULL
+        LEFT JOIN EntryEvent ee
+            ON e.ID = ee.EventID
+            AND ee.ClassID IS NOT NULL
+        WHERE e.ID = :raceId
         GROUP BY e.ID, e.Name;
     """)
     RaceInfo getRaceInfo(
