@@ -9,5 +9,5 @@ public record Punch(
         String id,
         Integer cardNumber,
         Integer controlCode,
-        Date timeOfDay
+        Long timestampInMs
 ) {}

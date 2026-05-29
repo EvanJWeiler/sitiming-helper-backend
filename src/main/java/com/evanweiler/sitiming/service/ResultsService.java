@@ -49,7 +49,7 @@ public class ResultsService {
 
         // iterate through list and generate list of times between punches, skipping excluded times
         for (int i = 0; i < punchList.size() - 1; i++) {
-            long timeBetween = punchList.get(i + 1).timeOfDay().getTime() - punchList.get(i).timeOfDay().getTime();
+            long timeBetween = punchList.get(i + 1).timestampInMs() - punchList.get(i).timestampInMs();
             String key = punchList.get(i).controlCode().toString() + "/" + punchList.get(i + 1).controlCode().toString();
 
             if (!validStages.contains(key)) continue;
@@ -62,7 +62,7 @@ public class ResultsService {
             });
         }
 
-        if (returnMap.values().size() == validStages.size()) {
+        if (returnMap.size() == validStages.size()) {
             returnMap.put(TOTAL_TIME,
                     returnMap.values().stream().mapToLong(Long::longValue).sum()
             );

@@ -14,13 +14,13 @@ public interface CategoryWithStatusRepository extends CrudRepository<CategoryWit
     @Query("""
         SELECT
             c.ID AS 'id', c.Name AS 'name', COUNT(e.ID) AS 'total_racers',
-            sum(IIF(ee.AllReturnedOrLostBroken = 0, 1, 0)) AS 'racers_on_course'
+            sum(IIF(ee.LastDownload is null and e.ID is not null, 1, 0)) AS 'racers_on_course'
         FROM Class c
         LEFT JOIN EntryEvent ee ON c.ID = ee.ClassID
-        LEFT JOIN Entry E ON ee.EntryID = E.ID
+        LEFT JOIN Entry e ON ee.EntryID = e.ID
         WHERE c.EventID = :raceId
         GROUP BY c.Name, c.ID
-        ORDER BY IIF(COUNT(e.ID) = 0, 9999, 0), c.Name
+        ORDER BY IIF(COUNT(e.ID) = 0, 9999, 0), c.Name;
     """)
     List<CategoryWithStatus> getCategoryStatusByRaceId(
             @Param("raceId") String raceId

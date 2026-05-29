@@ -15,7 +15,7 @@ public interface RacerRepository extends CrudRepository<RacerResult, String> {
 
     @Query("""
         SELECT
-            e.ID AS 'id', e.RaceNumber AS 'bib_number', e.Name AS 'racer_name',
+            e.ID AS 'id', CAST(e.BibNumber AS int) AS 'bib_number', e.Name AS 'racer_name',
             sc.CardNumber as 'card_number', e.Club AS 'team_name'
         FROM Entry e
         JOIN EntryEvent ee on e.ID = ee.EntryID
@@ -23,7 +23,7 @@ public interface RacerRepository extends CrudRepository<RacerResult, String> {
         JOIN SiCard sc ON ee.ID = sc.EntryEventID
         WHERE ee.EventID = :raceId
         AND c.ID = :categoryId
-        ORDER BY e.RaceNumber
+        ORDER BY CAST(e.BibNumber AS int);
     """)
     List<Racer> getRacersByCategoryId(
             @Param("raceId") String raceId,
@@ -32,15 +32,15 @@ public interface RacerRepository extends CrudRepository<RacerResult, String> {
 
     @Query("""
         SELECT
-            e.ID AS 'id', e.RaceNumber AS 'bib_number', e.Name AS 'racer_name',
+            e.ID AS 'id', CAST(e.BibNumber AS int) AS 'bib_number', e.Name AS 'racer_name',
             sc.CardNumber as 'card_number', e.Club AS 'team_name',
-            ee.AllReturnedOrLostBroken AS 'checked_in', c.Name AS 'category_name'
+            CAST(IIF(ee.LastDownload is null, 0, 1) AS bit) AS 'checked_in', c.Name AS 'category_name'
         FROM Entry e
         JOIN EntryEvent ee on e.ID = ee.EntryID
         JOIN Class c on c.ID = ee.ClassID
         JOIN SiCard sc ON ee.ID = sc.EntryEventID
         WHERE ee.EventID = :raceId
-        ORDER BY e.RaceNumber
+        ORDER BY CAST(e.BibNumber AS int);
     """)
     List<RacerStatus> getAllRacersStatus(
             @Param("raceId") String raceId
@@ -48,16 +48,16 @@ public interface RacerRepository extends CrudRepository<RacerResult, String> {
 
     @Query("""
         SELECT
-            e.ID AS 'id', e.RaceNumber AS 'bib_number', e.Name AS 'racer_name',
-            sc.CardNumber as 'card_number', e.Club AS 'team_name',
+            e.ID AS 'id', CAST(e.BibNumber as int) AS 'bib_number', e.Name AS 'racer_name',
+            sic.CardNumber as 'card_number', e.Club AS 'team_name',
             ee.AllReturnedOrLostBroken AS 'checked_in', c.Name AS 'category_name'
         FROM Entry e
         JOIN EntryEvent ee on e.ID = ee.EntryID
         JOIN Class c on c.ID = ee.ClassID
-        JOIN SiCard sc ON ee.ID = sc.EntryEventID
+        JOIN SiCard sic ON ee.ID = sic.EntryEventID
         WHERE ee.EventID = :raceId
         AND c.ID = :categoryId
-        ORDER BY e.RaceNumber
+        ORDER BY CAST(e.BibNumber as int);
     """)
     List<RacerStatus> getRacersStatusByCategoryId(
             @Param("raceId") String raceId,

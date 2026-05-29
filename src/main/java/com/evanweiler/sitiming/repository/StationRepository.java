@@ -17,7 +17,7 @@ public interface StationRepository extends CrudRepository<Station, String> {
             cm.Description AS 'stage_description'
         FROM ControlMaster cm
         WHERE cm.EventID = :raceId
-        AND cm.StationMode1 = 2
+        AND cm.SuppressSplit = 0 -- formerly cm.StationMode1 = 2
         ORDER BY cm.PublishedCode;
     """)
     List<Station> getStations(
@@ -30,11 +30,12 @@ public interface StationRepository extends CrudRepository<Station, String> {
             cc.Number AS 'num_order', CAST(cc.ExcludeFromTime AS BIT) AS 'excluded_from_time',
             IIF(cc.Activities IS NULL, cc.StageName, SUBSTRING(cc.Activities, 1, LEN(cc.Activities) - 2)) AS 'stage_label'
         FROM ControlMaster cm
-        JOIN CourseControl cc ON cm.ID = cc.ControlMasterID
-        JOIN Class c ON cc.CourseID = c.CourseID
+        JOIN CourseControl cc ON cc.ControlMasterID = cm.ID
+        JOIN CourseVariant cv ON cv.ID = cc.CourseVariantID
+        JOIN Class c ON cv.CourseID = c.CourseID
         WHERE c.EventID = :raceId
         AND c.ID = :categoryId
-        AND cm.StationMode1 = 2
+        AND cm.SuppressSplit = 0 -- formerly cm.StationMode1 = 2
         ORDER BY cc.Number;
     """)
     List<Station> getStationsByCategoryId(

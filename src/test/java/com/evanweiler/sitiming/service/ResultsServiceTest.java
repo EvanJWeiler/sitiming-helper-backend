@@ -70,15 +70,15 @@ class ResultsServiceTest {
         long minute = 1000L * 60 * 60;
 
         // erroneous end punch at beginning, halfway punch for stage 1
-        Punch p1 = new Punch(UUID.randomUUID().toString(), 1234567, 41, new Date(baseTime + (2 * minute)));
-        Punch p2 = new Punch(UUID.randomUUID().toString(), 1234567, 50, new Date(baseTime + (5 * minute)));
-        Punch p3 = new Punch(UUID.randomUUID().toString(), 1234567, 50, new Date(baseTime + (6 * minute)));
-        Punch p4 = new Punch(UUID.randomUUID().toString(), 1234567, 21, new Date(baseTime + (10 * minute)));
-        Punch p5 = new Punch(UUID.randomUUID().toString(), 1234567, 30, new Date(baseTime + (15 * minute)));
-        Punch p6 = new Punch(UUID.randomUUID().toString(), 1234567, 31, new Date(baseTime + (21 * minute)));
-        Punch p7 = new Punch(UUID.randomUUID().toString(), 1234567, 31, new Date(baseTime + (22 * minute)));
-        Punch p8 = new Punch(UUID.randomUUID().toString(), 1234567, 40, new Date(baseTime + (25 * minute)));
-        Punch p9 = new Punch(UUID.randomUUID().toString(), 1234567, 41, new Date(baseTime + (32 * minute)));
+        Punch p1 = new Punch(UUID.randomUUID().toString(), 1234567, 41, baseTime + (2 * minute));
+        Punch p2 = new Punch(UUID.randomUUID().toString(), 1234567, 50, baseTime + (5 * minute));
+        Punch p3 = new Punch(UUID.randomUUID().toString(), 1234567, 50, baseTime + (6 * minute));
+        Punch p4 = new Punch(UUID.randomUUID().toString(), 1234567, 21, baseTime + (10 * minute));
+        Punch p5 = new Punch(UUID.randomUUID().toString(), 1234567, 30, baseTime + (15 * minute));
+        Punch p6 = new Punch(UUID.randomUUID().toString(), 1234567, 31, baseTime + (21 * minute));
+        Punch p7 = new Punch(UUID.randomUUID().toString(), 1234567, 31, baseTime + (22 * minute));
+        Punch p8 = new Punch(UUID.randomUUID().toString(), 1234567, 40, baseTime + (25 * minute));
+        Punch p9 = new Punch(UUID.randomUUID().toString(), 1234567, 41, baseTime + (32 * minute));
 
         return Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9);
     }

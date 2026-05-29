@@ -13,7 +13,7 @@ public interface PunchRepository extends CrudRepository<Punch, String> {
 
     @Query("""
         SELECT
-            dp.ID AS 'id', dp.CardNumber as 'card_number', dp.ControlCode AS 'control_code', dp.CalculatedTimeOfDay AS 'time_of_day'
+            dp.ID AS 'id', dp.CardNumber as 'card_number', dp.ControlCode AS 'control_code', dp.CalculatedTime AS 'timestamp_in_ms'
         FROM DownloadPunch dp
         JOIN Download d ON dp.DownloadID = d.ID
         JOIN Class c ON d.EventId = c.EventID
